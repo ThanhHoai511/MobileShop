@@ -41,6 +41,7 @@
         @include('admin.layouts.header')
 
         <div id="page-wrapper">
+            <h2 style="padding-top: 30px;">@yield('title')</h2>
             @yield('content')
         </div>
         <!-- /#page-wrapper -->
