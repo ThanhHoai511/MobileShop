@@ -6,14 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductGroup;
 
-class AdminCategoryController extends Controller
+class AdminProductController extends Controller
 {
-
-    public function admin()
-    {
-        return view('admin.layouts.home');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +17,9 @@ class AdminCategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::all();
+        $product = Product::all();
 
-        return view('admin.category.index', ['category' => $category]);
+        return view('admin.product.index', ['product' => $product]);
     }
 
     /**
@@ -33,7 +29,7 @@ class AdminCategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.add');
+        return view('admin.product.add');
     }
 
     /**
@@ -46,15 +42,17 @@ class AdminCategoryController extends Controller
     {
         $name = $request->name;
         $description = $request->description;
+        $id_cate = $request->id_cate;
 
         $data = array(
             'name' => $name,
             'description' => $description,
+            'id_cate' => $id_cate,
         );
 
-        Category::create($data);
+        Product::create($data);
 
-        return redirect()->route('listCategory')->with('success', 'Add category successful!');
+        return redirect()->route('listProduct')->with('success', 'Add product successful!');
     }
 
     /**
@@ -76,9 +74,10 @@ class AdminCategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $product = Product::findOrFail($id);
+        $category = Category::all();
 
-        return view('admin.category.edit', ['category' => $category]);
+        return view('admin.product.edit', ['product' => $product, 'category' => $category]);
     }
 
     /**
@@ -92,14 +91,17 @@ class AdminCategoryController extends Controller
     {
         $name = $request->name;
         $description = $request->description;
+        $id_cate = $request->id_cate;
 
         $data = array(
             'name' => $name,
             'description' => $description,
+            'id_cate' => $id_cate,
         );
-        $category = Category::find($id)->update($data);
 
-        return redirect()->route('listCategory')->with('success', 'Edit successful!');
+        Product::find($id)->update($data);
+
+        return redirect()->route('listProduct')->with('success', 'Edit product successful!');
     }
 
     /**
@@ -110,13 +112,13 @@ class AdminCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::where('id_cate', $id)->get();
-        if(count($product) > 0)
+        $pro_group = ProductGroup::where('id_product', $id)->get();
+        if(count($pro_group) > 0)
         {
-            return redirect()->back()->with('fail', 'Can not delete this category!');
+            return redirect()->back()->with('fail', 'Can not delete this product!');
         }
         else{
-            Category::destroy($id);
+            Product::destroy($id);
             
             return redirect()->back()->with('success', 'Delete successful!');
         }

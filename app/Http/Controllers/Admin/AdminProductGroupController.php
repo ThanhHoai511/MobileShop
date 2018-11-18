@@ -4,26 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\ProductGroup;
 
-class AdminCategoryController extends Controller
+class AdminProductGroupController extends Controller
 {
-
-    public function admin()
-    {
-        return view('admin.layouts.home');
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $category = Category::all();
+        $pro_group = ProductGroup::all();
 
-        return view('admin.category.index', ['category' => $category]);
+        return view('admin.product-group.index', ['pro_group' => $pro_group]);
     }
 
     /**
@@ -33,7 +22,7 @@ class AdminCategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.add');
+        return view('admin.product-group.add');
     }
 
     /**
@@ -46,15 +35,17 @@ class AdminCategoryController extends Controller
     {
         $name = $request->name;
         $description = $request->description;
+        $id_cate = $request->id_cate;
 
         $data = array(
             'name' => $name,
             'description' => $description,
+            'id_cate' => $id_cate,
         );
 
-        Category::create($data);
+        Product::create($data);
 
-        return redirect()->route('listCategory')->with('success', 'Add category successful!');
+        return redirect()->route('listProduct')->with('success', 'Add product successful!');
     }
 
     /**
@@ -76,9 +67,10 @@ class AdminCategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $product = Product::findOrFail($id);
+        $category = Category::all();
 
-        return view('admin.category.edit', ['category' => $category]);
+        return view('admin.product.edit', ['product' => $product, 'category' => $category]);
     }
 
     /**
@@ -90,16 +82,7 @@ class AdminCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $name = $request->name;
-        $description = $request->description;
-
-        $data = array(
-            'name' => $name,
-            'description' => $description,
-        );
-        $category = Category::find($id)->update($data);
-
-        return redirect()->route('listCategory')->with('success', 'Edit successful!');
+        
     }
 
     /**
@@ -110,15 +93,6 @@ class AdminCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::where('id_cate', $id)->get();
-        if(count($product) > 0)
-        {
-            return redirect()->back()->with('fail', 'Can not delete this category!');
-        }
-        else{
-            Category::destroy($id);
-            
-            return redirect()->back()->with('success', 'Delete successful!');
-        }
+        //
     }
 }
