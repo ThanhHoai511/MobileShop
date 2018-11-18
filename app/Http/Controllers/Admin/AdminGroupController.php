@@ -4,26 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\Group;
+use App\Models\ProductGroup;
 
-class AdminCategoryController extends Controller
+class AdminGroupController extends Controller
 {
-
-    public function admin()
-    {
-        return view('admin.layouts.home');
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $category = Category::all();
+        $group = Group::all();
 
-        return view('admin.category.index', ['category' => $category]);
+        return view('admin.group.index', ['group' => $group]);
     }
 
     /**
@@ -33,7 +23,7 @@ class AdminCategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.add');
+        return view('admin.group.add');
     }
 
     /**
@@ -44,17 +34,18 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->name;
-        $description = $request->description;
+        $color = $request->color;
+        $ram = $request->ram;
+        $memory = $request->memory;
 
         $data = array(
-            'name' => $name,
-            'description' => $description,
+            'color' => $color,
+            'ram' => $ram,
+            'memory' => $memory,
         );
+        Group::create($data);
 
-        Category::create($data);
-
-        return redirect()->route('listCategory')->with('success', 'Add category successful!');
+        return redirect()->route('listGroup')->with('success', 'Add category successful!');
     }
 
     /**
@@ -76,9 +67,9 @@ class AdminCategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $group = Group::findOrFail($id);
 
-        return view('admin.category.edit', ['category' => $category]);
+        return view('admin.group.edit', ['group' => $group]);
     }
 
     /**
@@ -90,16 +81,18 @@ class AdminCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $name = $request->name;
-        $description = $request->description;
+        $color = $request->color;
+        $ram = $request->ram;
+        $memory = $request->memory;
 
         $data = array(
-            'name' => $name,
-            'description' => $description,
+            'color' => $color,
+            'ram' => $ram,
+            'memory' => $memory,
         );
-        $category = Category::find($id)->update($data);
+        $group = Group::find($id)->update($data);
 
-        return redirect()->route('listCategory')->with('success', 'Edit successful!');
+        return redirect()->route('listGroup')->with('success', 'Edit successful!');
     }
 
     /**
@@ -110,13 +103,13 @@ class AdminCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::where('id_cate', $id)->get();
-        if(count($product) > 0)
+        $pro_group = ProductGroup::where('id_group', $id)->get();
+        if(count($pro_group) > 0)
         {
-            return redirect()->back()->with('fail', 'Can not delete this category!');
+            return redirect()->back()->with('fail', 'Can not delete this group!');
         }
         else{
-            Category::destroy($id);
+            Group::destroy($id);
             
             return redirect()->back()->with('success', 'Delete successful!');
         }
