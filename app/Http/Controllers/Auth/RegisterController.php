@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Models\Category;
+use App\Models\DetailProduct;
+
 
 class RegisterController extends Controller
 {
@@ -38,6 +41,8 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        view()->share('category', Category::all());
+        view()->share('new', DetailProduct::orderBy('created_at', 'desc')->take(5)->get());
     }
 
     /**
@@ -67,6 +72,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'address' => $data['address'],
+            'phone' => $data['phone'],
         ]);
     }
 }

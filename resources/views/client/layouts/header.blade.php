@@ -2,26 +2,34 @@
     <div id="header-top">
         <div class="container">
             <div class="row clearfix">
-                <div class="col-md-6" id="header-text">
+                <div class="col-md-5" id="header-text">
                     <a>Nguyen Thi Thanh Hoai</a><b>CNTT3-K56</b>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <nav id="header-nav-top">
                         <ul class="list-inline pull-right" id="headermenu">
-                            <li>
-                                <a href=""><i class="fa fa-unlock"></i> Login</a>
-                            </li>
-                            <li>
-                                <a href=""><i class="fa fa-user"></i> My Account <i class="fa fa-caret-down"></i></a>
-                                <ul id="header-submenu">
-                                    <li><a href="">Contact</a></li>
-                                    <li><a href="">Cart</a></li>
-                                    <li><a href="">Checkout</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href=""><i class="fa fa-share-square-o"></i> Checkout</a>
-                            </li>
+                            @if(!Auth::check())
+                                <li>
+                                    <a href="{{ route('login') }}"><i class="fa fa-unlock"></i> Login</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('register') }}"><i class="fa fa-user"></i> Register</a>
+                                </li>
+                            @else
+                                <li>
+                                    <a href=""><i class="fa fa-user"></i> {{ Auth::user()->name }} <i class="fa fa-caret-down"></i></a>
+                                    <ul id="header-submenu" style="width: 150px;">
+                                        <li><a href="{{ route('editPass') }}">Change password</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a> 
+                                        </li>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </ul>
+                                </li>
+                            @endif
                         </ul>
                     </nav>
                 </div>
@@ -33,22 +41,13 @@
             <div class="col-md-5">
                 <form class="form-inline">
                     <div class="form-group">
-                        <label>
-                            <select name="category" class="form-control">
-                                <option> All Category</option>
-                                <option> Dell </option>
-                                <option> Hp </option>
-                                <option> Asuc </option>
-                                <option> Apper </option>
-                            </select>
-                        </label>
-                        <input type="text" name="keywork" placeholder=" input keywork" class="form-control">
+                        <input type="text" name="keywork" placeholder="Search" class="form-control">
                         <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                     </div>
                 </form>
             </div>
             <div class="col-md-4">
-                <a href="">
+                <a href="{{ route('index') }}">
                     <img src="{{ asset('client/images/logo-default.png') }}">
                 </a>
             </div>

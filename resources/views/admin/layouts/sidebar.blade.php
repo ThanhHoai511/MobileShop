@@ -24,6 +24,15 @@
             <li>
                 <a href="{{ route('listProductGroup') }}"><i class="fa fa-edit fa-fw"></i> Product Group</a>
             </li>
+            <li>
+                <a href="{{ route('listBillImport') }}"><i class="fa fa-edit fa-fw"></i> Bill Import</a>
+            </li>
+            <li>
+                <a href="{{ route('listDetailBillImport') }}"><i class="fa fa-edit fa-fw"></i> Detail Bill Import</a>
+            </li>
+            <li>
+                <a href="{{ route('listDetailProduct') }}"><i class="fa fa-edit fa-fw"></i> Detail Product</a>
+            </li>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

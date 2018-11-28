@@ -1,17 +1,25 @@
 @extends('admin.layouts.app')
-@section('title', 'Add Category')
+@section('title', 'Add Product Group')
 @section('content')
 	<form role="form" method="POST">
         {{csrf_field()}}
         <div class="form-group">
-            <label>Name</label>
-            <input name="name" class="form-control" placeholder="Enter name">
+            <label>Product</label>
+            <select name="id_product" id="">
+                @foreach($product as $pro)
+                    <option value="{{ $pro->id }}">{{ $pro->name }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
-            <label>Description</label>
-            <textarea name="description" id="" cols="119" rows="5" style="border-radius: 4px;"></textarea>
+            <label>Group</label>
+            <select name="id_group" id="">
+                @foreach($group as $gr)
+                    <option value="{{ $gr->id }}">{{ $gr->color }} {{ $gr->ram }} {{ $gr->memory }}</option>
+                @endforeach
+            </select>
         </div>
         <button type="submit" name="btnAdd" class="btn btn-success">Add</button>
-        <button type="reset" class="btn btn-primary">Reset</button>
+        <a href="{{ route('listProductGroup') }}"><button type="button" class="btn btn-primary">Back</button></a>
     </form>
 @endsection

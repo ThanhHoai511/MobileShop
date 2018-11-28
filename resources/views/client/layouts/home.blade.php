@@ -7,121 +7,36 @@
     </section>
 
     <section class="box-main1">
-        <h3 class="title-main" style="text-align: center;"><a href="javascript:void(0)"> Máy Canon </a> </h3>
+        <h3 class="title-main" style="text-align: center;"><a href="javascript:void(0)"> MOBILE </a> </h3>
         
-        <div class="showitem">
+        <div class="showitem" style="padding-bottom: 50px;">
+            @foreach($product as $pro)
             <div class="col-md-3 item-product bor">
+                @php
+                    $imgs = $pro->getImage($pro->id);
+                @endphp
                 <a href="">
-                    <img src="{{ asset('client/images/anh1.png') }}" class="" width="100%" height="180">
+                    <img src="{{ asset('uploads/mobile/' . $imgs[0]) }}" class="" width="100%" height="180">
                 </a>
                 <div class="info-item">
-                    <a href="">Lorem ipsum dolor sit amet</a>
-                    <p><strike class="sale">19.000.000 đ</strike> <b class="price">11.000.000 đ</b></p>
+                    <a href="" style="color: #484646;">{{ $pro->product_group->product->name }} {{ $pro->product_group->group->color }} {{ $pro->product_group->group->ram }} {{ $pro->product_group->group->memory }}</a>
+                    <p>
+                        @if($pro->sale)
+                        <strike class="sale">{{ $pro->price }} VND</strike>
+                        <br>
+                        <b class="price">{{ $pro->sale }} VND</b>
+                        @else
+                        <b class="price">{{ $pro->price }} VND</b>
+                        @endif
+                    </p>
                 </div>
                 <div class="hidenitem">
-                    <p><a href=""><i class="fa fa-search"></i></a></p>
-                    <p><a href=""><i class="fa fa-heart"></i></a></p>
-                    <p><a href=""><i class="fa fa-shopping-basket"></i></a></p>
+                    {{-- <p><a href=""><i class="fa fa-search"></i></a></p> --}}
+                    <p><a href="{{ route('addLike', $pro->id) }}"><i class="fa fa-heart"></i></a></p>
+                    <p><a href="{{ route('addToCart', [$pro->id]) }}"><i class="fa fa-shopping-basket"></i></a></p>
                 </div>
             </div>
-            <div class="col-md-3  item-product bor">
-                <a href="">
-                    <img src="{{ asset('client/images/anh2.png') }}" class="" width="100%" height="180">
-                </a>
-                <div class="info-item">
-                    <a href="">Lorem ipsum dolor sit amet</a>
-                    <p><strike class="sale">19.000.000 đ</strike> <b class="price">11.000.000 đ</b></p>
-                </div>
-                <div class="hidenitem">
-                    <p><a href=""><i class="fa fa-search"></i></a></p>
-                    <p><a href=""><i class="fa fa-heart"></i></a></p>
-                    <p><a href=""><i class="fa fa-shopping-basket"></i></a></p>
-                </div>
-            </div>
-            <div class="col-md-3  item-product bor">
-                 <a href="">
-                    <img src="{{ asset('client/images/anh4.png') }}" class="" width="100%" height="180">
-                </a>
-                <div class="info-item">
-                    <a href="">Lorem ipsum dolor sit amet</a>
-                    <p><strike class="sale">19.000.000 đ</strike> <b class="price">11.000.000 đ</b></p>
-                </div>
-                <div class="hidenitem">
-                    <p><a href=""><i class="fa fa-search"></i></a></p>
-                    <p><a href=""><i class="fa fa-heart"></i></a></p>
-                    <p><a href=""><i class="fa fa-shopping-basket"></i></a></p>
-                </div>
-            </div>
-            <div class="col-md-3  item-product bor">
-                 <a href="">
-                    <img src="{{ asset('client/images/anh3.png') }}" class="" width="100%" height="180">
-                </a>
-                <div class="info-item">
-                    <a href="">Lorem ipsum dolor sit amet</a>
-                    <p><strike class="sale">19.000.000 đ</strike> <b class="price">11.000.000 đ</b></p>
-                </div>
-                <div class="hidenitem">
-                    <p><a href=""><i class="fa fa-search"></i></a></p>
-                    <p><a href=""><i class="fa fa-heart"></i></a></p>
-                    <p><a href=""><i class="fa fa-shopping-basket"></i></a></p>
-                </div>
-            </div>
-            <div class="col-md-3 item-product bor">
-                <a href="">
-                    <img src="{{ asset('client/images/anh1.png') }}" class="" width="100%" height="180">
-                </a>
-                <div class="info-item">
-                    <a href="">Lorem ipsum dolor sit amet</a>
-                    <p><strike class="sale">19.000.000 đ</strike> <b class="price">11.000.000 đ</b></p>
-                </div>
-                <div class="hidenitem">
-                    <p><a href=""><i class="fa fa-search"></i></a></p>
-                    <p><a href=""><i class="fa fa-heart"></i></a></p>
-                    <p><a href=""><i class="fa fa-shopping-basket"></i></a></p>
-                </div>
-            </div>
-            <div class="col-md-3  item-product bor">
-                <a href="">
-                    <img src="{{ asset('client/images/anh2.png') }}" class="" width="100%" height="180">
-                </a>
-                <div class="info-item">
-                    <a href="">Lorem ipsum dolor sit amet</a>
-                    <p><strike class="sale">19.000.000 đ</strike> <b class="price">11.000.000 đ</b></p>
-                </div>
-                <div class="hidenitem">
-                    <p><a href=""><i class="fa fa-search"></i></a></p>
-                    <p><a href=""><i class="fa fa-heart"></i></a></p>
-                    <p><a href=""><i class="fa fa-shopping-basket"></i></a></p>
-                </div>
-            </div>
-            <div class="col-md-3  item-product bor">
-                 <a href="">
-                    <img src="{{ asset('client/images/anh4.png') }}" class="" width="100%" height="180">
-                </a>
-                <div class="info-item">
-                    <a href="">Lorem ipsum dolor sit amet</a>
-                    <p><strike class="sale">19.000.000 đ</strike> <b class="price">11.000.000 đ</b></p>
-                </div>
-                <div class="hidenitem">
-                    <p><a href=""><i class="fa fa-search"></i></a></p>
-                    <p><a href=""><i class="fa fa-heart"></i></a></p>
-                    <p><a href=""><i class="fa fa-shopping-basket"></i></a></p>
-                </div>
-            </div>
-            <div class="col-md-3  item-product bor">
-                 <a href="">
-                    <img src="{{ asset('client/images/anh3.png') }}" class="" width="100%" height="180">
-                </a>
-                <div class="info-item">
-                    <a href="">Lorem ipsum dolor sit amet</a>
-                    <p><strike class="sale">19.000.000 đ</strike> <b class="price">11.000.000 đ</b></p>
-                </div>
-                <div class="hidenitem">
-                    <p><a href=""><i class="fa fa-search"></i></a></p>
-                    <p><a href=""><i class="fa fa-heart"></i></a></p>
-                    <p><a href=""><i class="fa fa-shopping-basket"></i></a></p>
-                </div>
-            </div>            
+            @endforeach
         </div>
     </section>
 </div>

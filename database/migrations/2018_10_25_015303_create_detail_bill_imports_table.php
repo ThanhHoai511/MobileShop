@@ -16,7 +16,7 @@ class CreateDetailBillImportsTable extends Migration
         Schema::create('detail_bill_imports', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_bill_import')->unsigned();
-            $table->string('imei');
+            $table->string('imei')->unique();
             $table->integer('id_product_group')->unsigned();
             $table->foreign('id_product_group')->references('id')->on('product_groups');
             $table->foreign('id_bill_import')->references('id')->on('bill_imports');

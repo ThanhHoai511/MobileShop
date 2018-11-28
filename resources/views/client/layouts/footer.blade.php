@@ -88,9 +88,9 @@
                 <h3 class="tittle-footer"> Liên hệ</h3>
                 <ul>
                     <li>
-                        <p><i class="fa fa-home" style="font-size: 16px;padding-right: 5px;"></i> Ngách 56/34 số nhà 22 phường đức thắng </p>
-                        <p><i class="sp-ic fa fa-mobile" style="font-size: 22px;padding-right: 5px;"></i> 012345678</p>
-                        <p><i class="sp-ic fa fa-envelope" style="font-size: 13px;padding-right: 5px;"></i> support@gmail.com</p>
+                        <p><i class="fa fa-home" style="font-size: 16px;padding-right: 5px;"></i>71 Nguyen Chi Thanh </p>
+                        <p><i class="sp-ic fa fa-mobile" style="font-size: 22px;padding-right: 5px;"></i> 0396136933</p>
+                        <p><i class="sp-ic fa fa-envelope" style="font-size: 13px;padding-right: 5px;"></i> hoaintt97.gtvt@gmail.com</p>
                     </li>
                 </ul>
             </div>
