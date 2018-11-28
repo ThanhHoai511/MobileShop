@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ProductGroup;
+use App\Models\Product;
+use App\Models\Group;
 
 class AdminProductGroupController extends Controller
 {
@@ -22,7 +24,10 @@ class AdminProductGroupController extends Controller
      */
     public function create()
     {
-        return view('admin.product-group.add');
+        $product = Product::all();
+        $group = Group::all();
+
+        return view('admin.product-group.add', ['product' => $product, 'group' => $group]);
     }
 
     /**
@@ -33,19 +38,17 @@ class AdminProductGroupController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->name;
-        $description = $request->description;
-        $id_cate = $request->id_cate;
+        $product = $request->id_product;
+        $group = $request->id_group;
 
         $data = array(
-            'name' => $name,
-            'description' => $description,
-            'id_cate' => $id_cate,
+            'id_product' => $product,
+            'id_group' => $group,
         );
 
-        Product::create($data);
+        ProductGroup::create($data);
 
-        return redirect()->route('listProduct')->with('success', 'Add product successful!');
+        return redirect()->route('listProductGroup')->with('success', 'Add product group successful!');
     }
 
     /**
@@ -67,10 +70,11 @@ class AdminProductGroupController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        $category = Category::all();
+        $pg = ProductGroup::findOrFail($id);
+        $product = Product::all();
+        $group = Group::all();
 
-        return view('admin.product.edit', ['product' => $product, 'category' => $category]);
+        return view('admin.product-group.edit', ['product' => $product, 'group' => $group, 'pg' => $pg]);
     }
 
     /**
@@ -82,7 +86,17 @@ class AdminProductGroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $product = $request->id_product;
+        $group = $request->id_group;
+
+        $data = array(
+            'id_product' => $product,
+            'id_group' => $group,
+        );
+
+        ProductGroup::find($id)->update($data);
+
+        return redirect()->route('listProductGroup')->with('success', 'Edit product group successful!');
     }
 
     /**
@@ -93,6 +107,6 @@ class AdminProductGroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

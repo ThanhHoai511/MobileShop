@@ -20,9 +20,9 @@
                                 <tr>
                                     <td>{{ $pg->id }}</td>
                                     <td>{{ $pg->product->name }}</td>
-                                    <td>{{ $pg->group->color }}</td>
+                                    <td>{{ $pg->group->color }} {{ $pg->group->ram }} {{ $pg->group->memory }}</td>
                                     <td>
-                                    	<a href="#"><button class="btn btn-success">Edit</button></a>
+                                    	<a href="{{ route('editProductGroup', [$pg->id]) }}"><button class="btn btn-success">Edit</button></a>
                                     	<a href="#" onclick="return confirm('Ban co chac chan muon xoa?')"><button class="btn btn-danger">Delete</button></a>
                                     </td>
                                 </tr>

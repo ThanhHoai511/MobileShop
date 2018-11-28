@@ -11,12 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('client.layouts.home');
-});
 
-Route::group(['prefix' => 'admin'], function() {
-    Route::get('', 'Admin\AdminCategoryController@admin')->name('admin.index');
+
+Route::get('/editPass', 'Auth\ChangePasswordController@edit')->name('editPass');
+Route::put('/updatePass', 'Auth\ChangePasswordController@update')->name('updatePass');
+
+Route::group(['prefix' => ''], function() {
+    Route::get('/', 'Client\HomeController@index')->name('index');
+    Route::get('addLike/{id}', 'Client\CartController@addLike')->name('addLike');
+});
+Route::group(['prefix' => 'cart'], function() {
+    Route::get('', 'Client\CartController@cart')->name('cart');
+    Route::get('addCcart/{id}', 'Client\CartController@add')->name('addToCart');
+    Route::get('deleteItem/{id}', 'Client\CartController@removeItem')->name('deleteItem');
+    Route::get('deleteAll', 'Client\CartController@delete')->name('deleteAll');
+    Route::get('checkout', 'Client\CartController@checkout')->name('checkout');
+    Route::post('order', 'Client\CartController@order')->name('order');
+});
+ 
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+    Route::get('/', 'Admin\AdminCategoryController@admin')->name('admin.index');
     Route::group(['prefix' => 'category'], function() {
         Route::get('/', 'Admin\AdminCategoryController@index')->name('listCategory');
         Route::get('add', 'Admin\AdminCategoryController@create')->name('addCategory');
@@ -52,5 +66,38 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('edit/{id}', 'Admin\AdminProductGroupController@update');
         Route::get('delete/{id}', 'Admin\AdminProductGroupController@destroy')->name('deleteProductGroup');
     });
+
+    Route::group(['prefix' => 'bill-import'], function() {
+        Route::get('/', 'Admin\AdminBillImportController@index')->name('listBillImport');
+        Route::get('add', 'Admin\AdminBillImportController@create')->name('addBillImport');
+        Route::post('add', 'Admin\AdminBillImportController@store');
+        Route::get('edit/{id}', 'Admin\AdminBillImportController@edit')->name('editBillImport');
+        Route::post('edit/{id}', 'Admin\AdminBillImportController@update');
+        Route::get('delete/{id}', 'Admin\AdminBillImportController@destroy')->name('deleteBillImport');
+    });
+
+    Route::group(['prefix' => 'detail-product'], function() {
+        Route::get('/', 'Admin\AdminDetailProductController@index')->name('listDetailProduct');
+        Route::get('add', 'Admin\AdminDetailProductController@create')->name('addDetailProduct');
+        Route::post('add', 'Admin\AdminDetailProductController@store');
+        Route::get('edit/{id}', 'Admin\AdminDetailProductController@edit')->name('editDetailProduct');
+        Route::post('edit/{id}', 'Admin\AdminDetailProductController@update');
+        Route::get('delete/{id}', 'Admin\AdminDetailProductController@destroy')->name('deleteDetailProduct');
+    });
+
+    Route::group(['prefix' => 'detail-bill-import'], function() {
+        Route::get('/', 'Admin\AdminDetailBillImportController@index')->name('listDetailBillImport');
+        Route::get('add', 'Admin\AdminDetailBillImportController@create')->name('addDetailBillImport');
+        Route::post('add', 'Admin\AdminDetailBillImportController@store');
+        Route::get('edit/{id}', 'Admin\AdminDetailBillImportController@edit')->name('editDetailBillImport');
+        Route::post('edit/{id}', 'Admin\AdminDetailBillImportController@update');
+        Route::get('delete/{id}', 'Admin\AdminDetailBillImportController@destroy')->name('deleteDetailBillImport');
+    });
 }); 
 
+
+Auth::routes();
+
+Route::group(['prefix' => '', 'middleware' => ['role']], function() {
+    Route::get('/home', 'HomeController@index')->name('home');
+});
