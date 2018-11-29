@@ -21,6 +21,7 @@
                                 <th>Screen</th>
                                 <th>Weight</th>
                                 <th>Photos</th>
+                                <th>Description</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -47,9 +48,10 @@
                                         @endforeach
                                     @endif
                                 </td>
+                                <td>{{ $dbi->description }}</td>
                                 <td>
                                 	<a href="{{ asset('admin/detail-bill-import/edit/'. $dbi->id) }}"><button class="btn btn-success">Edit</button></a>
-                                	<a href="{{ asset('admin/detail-bill-import/delete/' . $dbi->id) }}" onclick="return confirm('Ban co chac chan muon xoa?')"><button class="btn btn-danger">Delete</button></a>
+                                	{{-- <a href="{{ asset('admin/detail-bill-import/delete/' . $dbi->id) }}" onclick="return confirm('Ban co chac chan muon xoa?')"><button class="btn btn-danger">Delete</button></a> --}}
                                 </td>
                             </tr>
                             @endforeach

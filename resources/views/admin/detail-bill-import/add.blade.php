@@ -3,6 +3,7 @@
 @section('content')
 	<form role="form" method="POST" enctype="multipart/form-data" style="margin-bottom: 30px;">
         {{csrf_field()}}
+        @include('admin.layouts.flash-msg')
         <div class="form-group">
             <label>Bill Import</label>
             <select name="id_bill_import" id="" class="form-control">
@@ -49,8 +50,12 @@
             <input type="text" name="weight" id="" class="form-control" placeholder="Enter weight">
         </div>
         <div class="form-group">
-            <label>Camera before</label>
+            <label>Photos</label>
             <input type="file" name="photos[]" id="" class="form-control"  multiple>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" id="" cols="30" rows="10"></textarea>
         </div>
         <button type="submit" class="btn btn-success">Add</button>
         <button type="reset" class="btn btn-primary">Reset</button>

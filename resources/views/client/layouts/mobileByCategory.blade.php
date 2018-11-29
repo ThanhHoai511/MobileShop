@@ -10,6 +10,7 @@
         <h3 class="title-main" style="text-align: center;"><a href="javascript:void(0)"> MOBILE </a> </h3>
         
         <div class="showitem" style="padding-bottom: 50px;">
+            @if($product)
             @foreach($product as $pro)
                 <div class="col-md-3 item-product bor">
                     <a href="{{ route('detailProduct', $pro->id) }}">
@@ -39,6 +40,7 @@
                     </a>
                 </div>
             @endforeach
+            @endif
         </div>
     </section>
 </div>

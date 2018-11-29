@@ -14,16 +14,6 @@ use App\Models\Cart;
 
 class CartController extends Controller
 {
-    public function addLike($id)
-    {
-    	$detailProduct = DetailProduct::findOrFail($id);
-    	$like = $detailProduct->like;
-    	$detailProduct->like = $like + 1;
-    	$detailProduct->save();
-
-    	return redirect()->back();
-    }
-
 	public function cart()
 	{
 		$category = Category::all();
@@ -121,7 +111,11 @@ class CartController extends Controller
             );
 
             DetailBill::create($data);
+            $detailProduct = DetailProduct::findOrFail($key);
+            $detailProduct->is_sold = 1;
+            $detailProduct->save();
         }
+
 
         Session::forget('cart');
         \Session::flash('status','Order successful!');
