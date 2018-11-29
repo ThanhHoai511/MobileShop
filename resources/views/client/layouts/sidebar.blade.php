@@ -4,7 +4,7 @@
         <ul>
             @foreach($category as $c)
             <li>
-                <a href="">{{ $c->name }}</a>
+                <a href="{{ route('mobileByCategory', $c->id) }}">{{ $c->name }}</a>
             </li>
             @endforeach
         </ul>
@@ -15,7 +15,7 @@
         <ul>
             @foreach($new as $new)
             <li class="clearfix">
-                <a href="">
+                <a href="{{ route('detailProduct', $new->id) }}">
                     @php
                         $imgs = $new->getImage($new->id);
                     @endphp

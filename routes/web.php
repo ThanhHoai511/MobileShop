@@ -18,11 +18,13 @@ Route::put('/updatePass', 'Auth\ChangePasswordController@update')->name('updateP
 
 Route::group(['prefix' => ''], function() {
     Route::get('/', 'Client\HomeController@index')->name('index');
-    Route::get('addLike/{id}', 'Client\CartController@addLike')->name('addLike');
+    Route::get('addLike/{id}', 'Client\HomeController@addLike')->name('addLike');
+    Route::get('detailProduct/{id}', 'Client\HomeController@detailProduct')->name('detailProduct');
+    Route::get('mobile/{id}', 'Client\HomeController@mobileByCategory')->name('mobileByCategory');
 });
 Route::group(['prefix' => 'cart'], function() {
     Route::get('', 'Client\CartController@cart')->name('cart');
-    Route::get('addCcart/{id}', 'Client\CartController@add')->name('addToCart');
+    Route::get('addCart/{id}', 'Client\CartController@add')->name('addToCart');
     Route::get('deleteItem/{id}', 'Client\CartController@removeItem')->name('deleteItem');
     Route::get('deleteAll', 'Client\CartController@delete')->name('deleteAll');
     Route::get('checkout', 'Client\CartController@checkout')->name('checkout');
@@ -78,8 +80,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     Route::group(['prefix' => 'detail-product'], function() {
         Route::get('/', 'Admin\AdminDetailProductController@index')->name('listDetailProduct');
-        Route::get('add', 'Admin\AdminDetailProductController@create')->name('addDetailProduct');
-        Route::post('add', 'Admin\AdminDetailProductController@store');
         Route::get('edit/{id}', 'Admin\AdminDetailProductController@edit')->name('editDetailProduct');
         Route::post('edit/{id}', 'Admin\AdminDetailProductController@update');
         Route::get('delete/{id}', 'Admin\AdminDetailProductController@destroy')->name('deleteDetailProduct');

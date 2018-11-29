@@ -3,11 +3,10 @@
 @section('content')
     @include('admin.layouts.flash-msg')
 	<div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                	<a href="{{ route('addDetailProduct') }}"><button class="btn btn-primary" style="margin-bottom: 20px;">Add</button></a>
-                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                       <thead>
                             <tr>
                                 <th>Edit</th>
@@ -24,7 +23,7 @@
                                 <th>Screen</th>
                                 <th>Weight</th>
                                 <th>Photos</th>
-                                {{-- <th>Action</th> --}}
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,6 +52,7 @@
                                         @endforeach
                                     @endif
                                 </td>
+                                <td>{{ $dp->description }}</td>
                                 {{-- <td>
                                 	
                                 	<a href="{{ asset('admin/detail-product/delete/' . $dp->id) }}" onclick="return confirm('Ban co chac chan muon xoa?')"><button class="btn btn-danger">Delete</button></a>

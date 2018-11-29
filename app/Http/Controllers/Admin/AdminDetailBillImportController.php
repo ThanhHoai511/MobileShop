@@ -8,6 +8,8 @@ use App\Models\DetailBillImport;
 use App\Models\BillImport;
 use App\Models\ProductGroup;
 use App\Models\DetailProduct;
+use App\Models\DetailBill;
+use App\Http\Requests\AdminAddDetailBillImportRequest;
 
 class AdminDetailBillImportController extends Controller
 {
@@ -42,7 +44,7 @@ class AdminDetailBillImportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminAddDetailBillImportRequest $request)
     {
         $dbi = new DetailBillImport();
         $photos = $request->photos;
@@ -56,6 +58,7 @@ class AdminDetailBillImportController extends Controller
         $dbi->pin = $request->pin;
         $dbi->screen = $request->screen;
         $dbi->weight = $request->weight;
+        $dbi->description = $request->description;
         $dbi->save();
 
         $dp = new DetailProduct();
@@ -69,6 +72,7 @@ class AdminDetailBillImportController extends Controller
         $dp->screen = $dbi->screen;
         $dp->weight = $dbi->weight;
         $dp->photos = $dbi->photos;
+        $dp->description = $request->description;
         $dp->save();
 
         return redirect()->route('listDetailBillImport')->with('success', 'Add successful!');
@@ -93,7 +97,12 @@ class AdminDetailBillImportController extends Controller
      */
     public function edit($id)
     {
-        
+        $bill_import = BillImport::all();
+        $product_group = ProductGroup::all();
+        $detail_bill_import = DetailBillImport::findOrFail($id);
+        $detailProduct = DetailProduct::where('id_detail_bill_import', $id)->first();
+
+        return view('admin.detail-bill-import.edit', ['dbi' => $detail_bill_import, 'bi' => $bill_import, 'pg' => $product_group, 'dp' => $detailProduct]);
     }
 
     /**
@@ -105,7 +114,40 @@ class AdminDetailBillImportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dbi = DetailBillImport::findOrFail($id);
+        if($request->photos != null){
+            $photos = $request->photos;
+            $dbi->photos = $dbi->encodeImage($photos);
+        }
+        $dbi->id_bill_import = $request->id_bill_import;
+        $dbi->id_product_group = $request->id_product_group;
+        $dbi->imei = $request->imei;
+        $dbi->price = $request->price;
+        $dbi->camera_before = $request->camera_before;
+        $dbi->camera_after = $request->camera_after;
+        $dbi->pin = $request->pin;
+        $dbi->screen = $request->screen;
+        $dbi->weight = $request->weight;
+        $dbi->description = $request->description;
+        $dbi->save();
+
+        $dp = DetailProduct::findOrFail($request->detail_product);
+        $dp->id_product_group = $request->id_product_group;
+        $dp->id_detail_bill_import = $id;
+        $dp->imei = $request->imei;
+        $dp->price = 1.2*$request->price;
+        $dp->camera_before = $request->camera_before;
+        $dp->camera_after = $request->camera_after;
+        $dp->pin = $request->pin;
+        $dp->screen = $request->screen;
+        $dp->weight = $request->weight;
+        if($request->photos != null)
+            $dp->photos = $request->photos;
+        $dp->description = $request->description;
+        $dp->save();
+
+
+        return redirect()->route('listDetailBillImport')->with('success', 'Edit successful!');
     }
 
     /**
@@ -116,6 +158,6 @@ class AdminDetailBillImportController extends Controller
      */
     public function destroy($id)
     {
-        //
+       
     }
 }
